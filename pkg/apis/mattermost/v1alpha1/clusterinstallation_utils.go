@@ -238,7 +238,7 @@ func (mattermost *ClusterInstallation) GenerateDeployment(dbUser, dbPassword str
 		envVarDB = append(envVarDB, corev1.EnvVar{
 			Name: "MM_SQLSETTINGS_DATASOURCEREPLICAS",
 			Value: fmt.Sprintf(
-				"%s:%s@tcp(db-mysql-nodes.%s:3306)/mattermost?readTimeout=30s&writeTimeout=30s",
+				"%s:%s@tcp(db-mysql.%s:3306)/mattermost?readTimeout=30s&writeTimeout=30s",
 				dbUser, dbPassword, mattermost.Namespace,
 			),
 		})
@@ -269,6 +269,12 @@ func (mattermost *ClusterInstallation) GenerateDeployment(dbUser, dbPassword str
 	})
 
 	minioName := fmt.Sprintf("%s-minio", mattermost.Name)
+
+	// Check if custom secret was passed
+	if mattermost.Spec.Minio.Secret != "" {
+		minioName = mattermost.Spec.Minio.Secret
+	}
+
 	minioAccessEnv := &corev1.EnvVarSource{
 		SecretKeyRef: &corev1.SecretKeySelector{
 			LocalObjectReference: corev1.LocalObjectReference{
@@ -496,7 +502,9 @@ func (mattermost *ClusterInstallation) GenerateDeployment(dbUser, dbPassword str
 							Resources:    mattermost.Spec.Resources,
 						},
 					},
-					Volumes: volumeLicense,
+					Volumes:      volumeLicense,
+					Affinity:     mattermost.Spec.Affinity,
+					NodeSelector: mattermost.Spec.NodeSelector,
 				},
 			},
 		},
