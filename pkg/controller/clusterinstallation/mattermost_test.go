@@ -9,6 +9,7 @@ import (
 
 	"github.com/mattermost/mattermost-operator/pkg/apis"
 	mattermostv1alpha1 "github.com/mattermost/mattermost-operator/pkg/apis/mattermost/v1alpha1"
+	mattermostmysql "github.com/mattermost/mattermost-operator/pkg/components/mysql"
 	logmo "github.com/mattermost/mattermost-operator/pkg/log"
 	appsv1 "k8s.io/api/apps/v1"
 	batchv1 "k8s.io/api/batch/v1"
@@ -49,7 +50,7 @@ func TestCheckMattermost(t *testing.T) {
 	s.AddKnownTypes(mattermostv1alpha1.SchemeGroupVersion, ci)
 	r := &ReconcileClusterInstallation{client: fake.NewFakeClient(), scheme: s}
 
-	err := prepAllDependencyTestResources(r, ci)
+	err := prepAllDependencyTestResources(r.client, ci)
 	require.NoError(t, err)
 
 	t.Run("service", func(t *testing.T) {
@@ -140,5 +141,16 @@ func TestCheckMattermost(t *testing.T) {
 		assert.Equal(t, original.Labels, found.Labels)
 		assert.Equal(t, original.Spec.Replicas, found.Spec.Replicas)
 		assert.Equal(t, original.Spec.Template, found.Spec.Template)
+	})
+
+	t.Run("final check", func(t *testing.T) {
+		t.Run("database secret", func(t *testing.T) {
+			dbSecret := &corev1.Secret{}
+			err := r.client.Get(context.TODO(), types.NamespacedName{Name: mattermostmysql.DefaultDatabaseSecretName(ciName), Namespace: ciNamespace}, dbSecret)
+			require.NoError(t, err)
+
+			dbInfo := getDatabaseInfoFromSecret(dbSecret)
+			require.NoError(t, dbInfo.IsValid())
+		})
 	})
 }
