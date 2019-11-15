@@ -82,7 +82,7 @@ func TestReconcile(t *testing.T) {
 	// Define the NamespacedName objects that will be used to lookup the
 	// cluster resources.
 	ciKey := types.NamespacedName{Name: ciName, Namespace: ciNamespace}
-	ciMysqlKey := types.NamespacedName{Name: "db", Namespace: ciNamespace}
+	ciMysqlKey := types.NamespacedName{Name: "db-1234567812345678123456781234567812345678", Namespace: ciNamespace}
 	ciMinioKey := types.NamespacedName{Name: ciName + "-minio", Namespace: ciNamespace}
 
 	t.Run("mysql", func(t *testing.T) {
