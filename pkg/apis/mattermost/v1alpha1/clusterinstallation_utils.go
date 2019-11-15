@@ -277,14 +277,14 @@ func (mattermost *ClusterInstallation) GenerateDeployment(deploymentName, ingres
 		}
 	} else {
 		masterDBEnvVar.Value = fmt.Sprintf(
-			"mysql://%s:%s@tcp(db-1234567812345678123456781234567812345678mysql-master.%s:3306)/%s?charset=utf8mb4,utf8&readTimeout=30s&writeTimeout=30s",
+			"mysql://%s:%s@tcp(db-1234567812345678123456781234567812345678-mysql-master.%s:3306)/%s?charset=utf8mb4,utf8&readTimeout=30s&writeTimeout=30s",
 			dbUser, dbPassword, mattermost.Namespace, dbName,
 		)
 
 		envVarDB = append(envVarDB, corev1.EnvVar{
 			Name: "MM_SQLSETTINGS_DATASOURCEREPLICAS",
 			Value: fmt.Sprintf(
-				"%s:%s@tcp(db-1234567812345678123456781234567812345678mysql.%s:3306)/%s?readTimeout=30s&writeTimeout=30s",
+				"%s:%s@tcp(db-1234567812345678123456781234567812345678-mysql.%s:3306)/%s?readTimeout=30s&writeTimeout=30s",
 				dbUser, dbPassword, mattermost.Namespace, dbName,
 			),
 		})
@@ -296,7 +296,7 @@ func (mattermost *ClusterInstallation) GenerateDeployment(deploymentName, ingres
 			ImagePullPolicy: corev1.PullIfNotPresent,
 			Command: []string{
 				"sh", "-c",
-				fmt.Sprintf("until curl --max-time 5 http://db-1234567812345678123456781234567812345678mysql-master.%s:3306; do echo waiting for mysql; sleep 5; done;", mattermost.Namespace),
+				fmt.Sprintf("until curl --max-time 5 http://db-1234567812345678123456781234567812345678-mysql-master.%s:3306; do echo waiting for mysql; sleep 5; done;", mattermost.Namespace),
 			},
 		})
 	}
