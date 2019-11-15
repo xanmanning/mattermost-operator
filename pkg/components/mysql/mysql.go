@@ -18,7 +18,7 @@ import (
 func Cluster(mattermost *mattermostv1alpha1.ClusterInstallation) *mysqlOperator.MysqlCluster {
 	mysql := &mysqlOperator.MysqlCluster{
 		ObjectMeta: metav1.ObjectMeta{
-			Name:      "db",
+			Name:      "db-1234567812345678123456781234567812345678",
 			Namespace: mattermost.Namespace,
 			Labels:    mattermostv1alpha1.ClusterInstallationResourceLabels(mattermost.Name),
 			OwnerReferences: []metav1.OwnerReference{
