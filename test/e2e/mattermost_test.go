@@ -38,7 +38,6 @@ func TestMattermost(t *testing.T) {
 	require.NoError(t, err)
 
 	ctx := framework.NewTestCtx(t)
-	framework.
 	defer ctx.Cleanup()
 
 	t.Run("initialize cluster resources", func(t *testing.T) {
