@@ -14,7 +14,7 @@ require (
 	github.com/pkg/errors v0.9.1
 	github.com/presslabs/mysql-operator v0.4.0
 	github.com/spf13/pflag v1.0.5
-	github.com/stretchr/testify v1.6.1
+	github.com/stretchr/testify v1.5.1
 	golang.org/x/net v0.0.0-20200301022130-244492dfa37a
 	golang.org/x/tools v0.0.0-20200702044944-0cc1aa72b347 // indirect
 	k8s.io/api v0.18.2
