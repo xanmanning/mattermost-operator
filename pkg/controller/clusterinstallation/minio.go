@@ -12,7 +12,7 @@ import (
 	mattermostv1alpha1 "github.com/mattermost/mattermost-operator/pkg/apis/mattermost/v1alpha1"
 	mattermostMinio "github.com/mattermost/mattermost-operator/pkg/components/minio"
 
-	minioOperator "github.com/minio/minio-operator/pkg/apis/miniocontroller/v1beta1"
+	minioOperator "github.com/minio/minio-operator/pkg/apis/operator.min.io/v1"
 )
 
 func (r *ReconcileClusterInstallation) checkMinio(mattermost *mattermostv1alpha1.ClusterInstallation, reqLogger logr.Logger) error {

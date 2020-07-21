@@ -7,7 +7,7 @@ import (
 	"github.com/mattermost/mattermost-operator/pkg/components/utils"
 	mattermostApp "github.com/mattermost/mattermost-operator/pkg/mattermost"
 
-	minioOperator "github.com/minio/minio-operator/pkg/apis/miniocontroller/v1beta1"
+	minioOperator "github.com/minio/minio-operator/pkg/apis/operator.min.io/v1"
 
 	corev1 "k8s.io/api/core/v1"
 	resource "k8s.io/apimachinery/pkg/api/resource"
