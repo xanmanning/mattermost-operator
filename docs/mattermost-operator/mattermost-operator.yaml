@@ -1540,6 +1540,18 @@ rules:
   - patch
   - delete
 - apiGroups:
+  - operator.min.io
+  resources:
+  - "*"
+  verbs:
+  - "*"
+- apiGroups:
+  - min.io
+  resources:
+  - "*"
+  verbs:
+  - "*"
+- apiGroups:
   - miniocontroller.min.io
   resources:
   - '*'
