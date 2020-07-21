@@ -38,7 +38,12 @@ func Instance(mattermost *mattermostv1alpha1.ClusterInstallation) *minioOperator
 			},
 		},
 		Spec: minioOperator.MinIOInstanceSpec{
-			Replicas:    mattermost.Spec.Minio.Replicas,
+			Zones: []minioOperator.Zone{
+				{
+					Name:    "minio-zone0",
+					Servers: mattermost.Spec.Minio.Replicas,
+				},
+			},
 			Mountpath:   "/export",
 			CredsSecret: &corev1.LocalObjectReference{Name: minioName},
 			VolumeClaimTemplate: &corev1.PersistentVolumeClaim{
