@@ -50,22 +50,22 @@ KIND_CONFIG_FILE ?= kind-config.yaml
 TOOLS_BIN_DIR := $(abspath bin)
 
 SHADOW_BIN := shadow
-SHADOW_VER := master
+SHADOW_VER := main
 SHADOW_GEN := $(TOOLS_BIN_DIR)/$(SHADOW_BIN)
 
 OPENAPI_VER := release-1.22
 OPENAPI_BIN := openapi-gen
 OPENAPI_GEN := $(TOOLS_BIN_DIR)/$(OPENAPI_BIN)
 
-GOVERALLS_VER := master
+GOVERALLS_VER := main
 GOVERALLS_BIN := goveralls
 GOVERALLS_GEN := $(TOOLS_BIN_DIR)/$(GOVERALLS_BIN)
 
-OUTDATED_VER := master
+OUTDATED_VER := main
 OUTDATED_BIN := go-mod-outdated
 OUTDATED_GEN := $(TOOLS_BIN_DIR)/$(OUTDATED_BIN)
 
-YQ_VER := master
+YQ_VER := main
 YQ_BIN := yq
 YQ_GEN := $(TOOLS_BIN_DIR)/$(YQ_BIN)
 
@@ -87,7 +87,7 @@ goverall: $(GOVERALLS_GEN) ## Runs goveralls
 
 build: ## Build the mattermost-operator
 	@echo Building Mattermost-operator
-	GO111MODULE=on GOOS=linux GOARCH=amd64 CGO_ENABLED=0 $(GO) build $(GOFLAGS) -gcflags all=-trimpath=$(GOPATH) -asmflags all=-trimpath=$(GOPATH) -a -installsuffix cgo -o build/_output/bin/mattermost-operator $(GO_LINKER_FLAGS) ./main.go
+	GO111MODULE=on GOOS=linux GOARCH=arm64 CGO_ENABLED=0 $(GO) build $(GOFLAGS) -gcflags all=-trimpath=$(GOPATH) -asmflags all=-trimpath=$(GOPATH) -a -installsuffix cgo -o build/_output/bin/mattermost-operator $(GO_LINKER_FLAGS) ./main.go
 
 build-image:  ## Build the docker image for mattermost-operator
 	@echo Building Mattermost-operator Docker Image
